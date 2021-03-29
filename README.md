@@ -10,6 +10,9 @@
 > _Heurisiticas_
 
 
-*a* Lista de dependências
-*b* Exemplo de comando para executar código
-*c* Exemplo de comando para compilar código, caso necessário
+## Solicitado pelo professor
+> a Lista de dependências
+
+> b Exemplo de comando para executar código
+
+> c Exemplo de comando para compilar código, caso necessário
