@@ -15,8 +15,8 @@ def distancia(xyA,xyB): #calcula a distancia reta entre dois pontos
     return round(d,12)
 
 bairros_custo = {} #dicionario com o custo de cada travessia {('bairroA_numero','bairroB_numero'): distancia}
-for k in range(1,39):
-    for c in range(1,39):
+for k in range(1,42):
+    for c in range(1,42):
         bairros_custo[(str(k),str(c))] = distancia(bairros[str(k)],bairros[str(c)])
 
 def custo_total(lista_bairros): #retorna o custo total de uma solucao
@@ -31,15 +31,15 @@ def custo_total(lista_bairros): #retorna o custo total de uma solucao
 def vizinho(solucao):
     solucao_anterior = solucao.copy()
     while True:
-        posA = random.randint(0,37)
-        posB = random.randint(0,37)
+        posA = random.randint(0,39)
+        posB = random.randint(0,39)
         a = solucao[posA]
         b = solucao[posB]
         solucao[posA] = b
         solucao[posB] = a
 
-        posC = random.randint(0, 37)
-        posD = random.randint(0, 37)
+        posC = random.randint(0, 39)
+        posD = random.randint(0, 39)
         c = solucao[posC]
         d = solucao[posD]
         solucao[posC] = d
@@ -95,7 +95,7 @@ def annealing(solucao):
     return melhor_solucao, melhor_custo
 
 def gerar_solucao(): #gera uma solucao aleatoria
-    solucao_aleatoria = [x for x in range(1,39)]
+    solucao_aleatoria = [x for x in range(1,42)]
     random.shuffle(solucao_aleatoria)
     return solucao_aleatoria
 solucao_inicial = gerar_solucao()
