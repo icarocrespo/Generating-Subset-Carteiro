@@ -1,5 +1,16 @@
 # Generating-Subset-Carteiro
 
+#### Meta-Heuristica: Annealing (Anelamento/Recozimento)
+
+## Execução
+
+#### Para executar a aplicação no linux via terminal, execute os seguintes passos:
+
+> 1. Abra o diretório em que requirements.txt está localizado
+> 2. Abra o prompt de comando (terminal)
+> 3. Execute: pip install -r requirements.txt
+> 4. Execute: python3 Problema\ do\ Carteiro.py
+
 ## Requisitos
 > Fornecer um trajeto entre a sede dos Correios e os bairros presentes no grafo;
 
@@ -7,11 +18,8 @@
 
 > Haverá 41 pontos no grafo referentes aos bairros da cidade de Alegrete;
 
-> _Heurisiticas_
-
-
 ## Solicitado pelo professor
-> a Lista de dependências
+> a Lista de dependências   
 
 > b Exemplo de comando para executar código
 
