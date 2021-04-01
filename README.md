@@ -1,4 +1,4 @@
-# Generating-Subset-Carteiro
+# Generating Subset Carteiro
 
 #### Algoritmo Base: Caixeiro Viajante
 #### Meta-Heuristica: Annealing (Anelamento/Recozimento)
