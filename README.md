@@ -31,8 +31,9 @@
 ## Requisitos
 
 > Fornecer um trajeto entre a sede dos Correios e os bairros presentes no grafo;
-
-> Haverá 41 pontos no grafo referentes aos bairros da cidade de Alegrete.
+> O trajeto deve ser menor ou igual ao tempo limite informado;
+> Haverá 41 pontos no grafo referentes aos bairros da cidade de Alegrete;
+> A aplicação deve receber como parâmetro o tempo máximo e o destino para execução da rota.
 
 
 ## Solicitado pelo professor
