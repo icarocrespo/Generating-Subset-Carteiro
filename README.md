@@ -1,6 +1,9 @@
 # Generating-Subset-Carteiro
 
+#### Algoritmo Base: Caixeiro Viajante
 #### Meta-Heuristica: Annealing (Anelamento/Recozimento)
+#### Link do repositório do algoritmo base: https://github.com/arianalima/CaixeiroViajante
+#### Autora: Ariana Lima
 
 ## Execução
 
