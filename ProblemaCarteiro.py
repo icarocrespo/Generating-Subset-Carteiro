@@ -31,15 +31,15 @@ def custo_total(lista_bairros): #retorna o custo total de uma solucao
 def vizinho(solucao):
     solucao_anterior = solucao.copy()
     while True:
-        posA = random.randint(0,39)
-        posB = random.randint(0,39)
+        posA = random.randint(0,40)
+        posB = random.randint(0,40)
         a = solucao[posA]
         b = solucao[posB]
         solucao[posA] = b
         solucao[posB] = a
 
-        posC = random.randint(0, 39)
-        posD = random.randint(0, 39)
+        posC = random.randint(0, 40)
+        posD = random.randint(0, 40)
         c = solucao[posC]
         d = solucao[posD]
         solucao[posC] = d
