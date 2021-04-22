@@ -45,7 +45,7 @@ except ImportError as error:
 
 DEFAULT_SEED = None
 DEFAULT_N_START = 1
-DEFAULT_N_STOP = 10
+DEFAULT_N_STOP = 2
 DEFAULT_N_STEP = 1
 DEFAULT_N_MAX  = None
 DEFAULT_TRIALS = 3
@@ -254,64 +254,22 @@ class Experimento(ABC):
 		if self.gn2_constante is not None:
 			self.plota_gn(self.gn2_constante, self.gn2_legenda, self.aproximacao_cor_rgb, "dashed")
 
-
-class TspNaive(Experimento):
-
-	def __init__(self, args):
-		super().__init__(args)
-		self.id = "t"
-		self.linestyle = 'loosely'
-		self.script = "alg_sort_selection.py"
-		self.output = "alg_sort_selection.txt"
-
-		indice_cor = 9
-
-		# configurações de plotagem
-		self.medicao_legenda = "tsp naive medido"
-		self.medicao_cor_rgb = mapa_escalar.to_rgba(7*indice_cor)
-		self.medicao_formato = formatos[indice_cor]
-
-		self.aproximacao_legenda = "tsp naive aproximado"
-		self.aproximacao_cor_rgb = mapa_escalar.to_rgba(2*indice_cor+1)
-
-		# configurações de plotagem upper bound g(x)
-		self.gn1_constante = 0.0000001
-		self.gn1_legenda = "g(n)=n!, c={:.2e}".format(self.gn1_constante)
-
-		# configurações de plotagem lower bound g(x)
-		self.gn2_constante = 0.0000001
-		self.gn2_legenda = "g(n)=n!, c={:.2e}".format(self.gn2_constante)
-
-		self.multiplo = 1
-		self.tamanhos_aproximados = range(self.args.nmax * self.multiplo+1)
-
-	def executa_aproximacao(self):
-		# realiza aproximação
-		parametros, pcov = opt.curve_fit(funcao_fatorial, xdata=self.tamanhos, ydata=self.medias)
-		self.aproximados = [funcao_fatorial(x, *parametros) for x in self.tamanhos_aproximados]
-		print("aproximados:           {}".format(self.aproximados))
-		print("parametros_otimizados: {}".format(parametros))
-		print("pcov:                  {}".format(pcov))
-
-	def g(self, n, c):
-		return factorial(n)*c
-
-class SortSelection(Experimento):
+class Carteiro16(Experimento):
 
 	def __init__(self, args):
 		super().__init__(args)
-		self.id = "s"
-		self.script = "alg_sort_selection.py"
-		self.output = "alg_sort_selection.txt"
+		self.id = "c16"
+		self.script = "ProblemaCarteiro16.py"
+		self.output = "problema_carteiro_16.txt"
 
 		indice_cor = 5
 
 		# configurações de plotagem
-		self.medicao_legenda = "sort selection medido"
+		self.medicao_legenda = "Problema Carteiro N=16 medido"
 		self.medicao_cor_rgb = mapa_escalar.to_rgba(2*indice_cor)
 		self.medicao_formato = formatos[indice_cor]
 
-		self.aproximacao_legenda = "sort selection aproximado"
+		self.aproximacao_legenda = "Problema Carteiro N=16 aproximado"
 		self.aproximacao_cor_rgb = mapa_escalar.to_rgba(2*indice_cor+1)
 
 		# configurações de plotagem upper bound g(x)
@@ -327,8 +285,88 @@ class SortSelection(Experimento):
 
 	def executa_aproximacao(self):
 		# realiza aproximação
-		parametros, pcov = opt.curve_fit(funcao_quadratica, xdata=self.tamanhos, ydata=self.medias)
-		self.aproximados = [funcao_quadratica(x, *parametros) for x in self.tamanhos_aproximados ]
+		parametros, pcov = opt.curve_fit(funcao_fatorial, xdata=self.tamanhos, ydata=self.medias)
+		self.aproximados = [funcao_fatorial(x, *parametros) for x in self.tamanhos_aproximados ]
+		print("aproximados:           {}".format(self.aproximados))
+		print("parametros_otimizados: {}".format(parametros))
+		print("pcov:                  {}".format(pcov))
+
+	def g(self, n, c):
+		return n*n*c
+
+class Carteiro82(Experimento):
+
+	def __init__(self, args):
+		super().__init__(args)
+		self.id = "c82"
+		self.script = "ProblemaCarteiro82.py"
+		self.output = "problema_carteiro_82.txt"
+
+		indice_cor = 5
+
+		# configurações de plotagem
+		self.medicao_legenda = "Problema Carteiro N=82 medido"
+		self.medicao_cor_rgb = mapa_escalar.to_rgba(2*indice_cor)
+		self.medicao_formato = formatos[indice_cor]
+
+		self.aproximacao_legenda = "Problema Carteiro N=82 aproximado"
+		self.aproximacao_cor_rgb = mapa_escalar.to_rgba(2*indice_cor+1)
+
+		# configurações de plotagem upper bound g(x)
+		self.gn1_constante = 0.000018
+		self.gn1_legenda = "g(n)=n^2, c={:.2e}".format(self.gn1_constante)
+
+		# configurações de plotagem lower bound g(x)
+		self.gn2_constante = 0.0000020
+		self.gn2_legenda = "g(n)=n^2, c={:.2e}".format(self.gn2_constante)
+
+		self.multiplo = 1
+		self.tamanhos_aproximados = range(self.args.nmax * self.multiplo+1)
+
+	def executa_aproximacao(self):
+		# realiza aproximação
+		parametros, pcov = opt.curve_fit(funcao_fatorial, xdata=self.tamanhos, ydata=self.medias)
+		self.aproximados = [funcao_fatorial(x, *parametros) for x in self.tamanhos_aproximados ]
+		print("aproximados:           {}".format(self.aproximados))
+		print("parametros_otimizados: {}".format(parametros))
+		print("pcov:                  {}".format(pcov))
+
+	def g(self, n, c):
+		return n*n*c
+
+class Carteiro41(Experimento):
+
+	def __init__(self, args):
+		super().__init__(args)
+		self.id = "c41"
+		self.script = "ProblemaCarteiro41.py"
+		self.output = "problema_carteiro_41.txt"
+
+		indice_cor = 5
+
+		# configurações de plotagem
+		self.medicao_legenda = "Problema Carteiro N=41 medido"
+		self.medicao_cor_rgb = mapa_escalar.to_rgba(2*indice_cor)
+		self.medicao_formato = formatos[indice_cor]
+
+		self.aproximacao_legenda = "Problema Carteiro N=41 aproximado"
+		self.aproximacao_cor_rgb = mapa_escalar.to_rgba(2*indice_cor+1)
+
+		# configurações de plotagem upper bound g(x)
+		self.gn1_constante = 0.000018
+		self.gn1_legenda = "g(n)=n^2, c={:.2e}".format(self.gn1_constante)
+
+		# configurações de plotagem lower bound g(x)
+		self.gn2_constante = 0.0000020
+		self.gn2_legenda = "g(n)=n^2, c={:.2e}".format(self.gn2_constante)
+
+		self.multiplo = 1
+		self.tamanhos_aproximados = range(self.args.nmax * self.multiplo+1)
+
+	def executa_aproximacao(self):
+		# realiza aproximação
+		parametros, pcov = opt.curve_fit(funcao_fatorial, xdata=self.tamanhos, ydata=self.medias)
+		self.aproximados = [funcao_fatorial(x, *parametros) for x in self.tamanhos_aproximados ]
 		print("aproximados:           {}".format(self.aproximados))
 		print("parametros_otimizados: {}".format(parametros))
 		print("pcov:                  {}".format(pcov))
@@ -367,7 +405,7 @@ def main():
 	help_msg = "figura (extensão .png ou .pdf) ou nenhum para apresentar na tela.  Padrão:{}".format(DEFAULT_OUTPUT)
 	parser.add_argument("--out", "-o", help=help_msg, default=DEFAULT_OUTPUT, type=str)
 
-	help_msg = "algoritmos (t=tsp naive, s=selection sort) ou nenhum para executar todos.  Padrão:{}".format(DEFAULT_ALGORITMOS)
+	help_msg = "algoritmos (c16=carteiro16, c41=carteir041, c82=carteiro82) ou nenhum para executar todos.  Padrão:{}".format(DEFAULT_ALGORITMOS)
 	parser.add_argument("--algoritmos", "-l", help=help_msg, default=DEFAULT_ALGORITMOS, type=str)
 
 	help_msg = "verbosity logging level (INFO=%d DEBUG=%d)" % (logging.INFO, logging.DEBUG)
@@ -395,7 +433,7 @@ def main():
 	imprime_config(args)
 
 	# lista de experimentos disponíveis TspNaive(args),
-	experimentos = [TspNaive(args), SortSelection(args)]
+	experimentos = [Carteiro16(args), Carteiro41(args), Carteiro82(args)]
 
 	for e in experimentos:
 		if args.algoritmos is None or e.id in args.algoritmos:
@@ -411,7 +449,7 @@ def main():
 	# configurações gerais
 	plt.legend()
 	#plt.xticks(range(args.nstart, args.nstop+1, args.nstep))
-	plt.title("Wagner Inácio de Oliveira - Impacto de n".format(args.trials, args.seed))
+	plt.title("Problema do Carteiro".format(args.trials, args.seed))
 	plt.xlabel("Tamanho da instância (n)")
 	plt.ylabel("Função")
 
