@@ -11,14 +11,14 @@
 
 > 1. Abra a IDE
 > 2. Abra o diretório do projeto
-> 3. Execute o arquivo "ProblemaCarteiro.py" clicando com o botão direito do mouse em Run.
+> 3. Execute o arquivo "frame.py" clicando com o botão direito do mouse em Run.
 
 #### Para executar a aplicação no Linux, execute os seguintes passos:
 
 > 1. Abra o diretório em que requirements.txt está localizado
 > 2. Abra o prompt de comando (terminal)
 > 3. Execute: pip install -r requirements.txt
-> 4. Execute: python3 ProblemaCarteiro.py
+> 4. Execute: python3 frame.py
 
 #### Para executar a aplicação no Windows, execute os seguintes passos:
 
