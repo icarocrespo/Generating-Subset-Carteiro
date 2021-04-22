@@ -3,20 +3,6 @@ import random, decimal
 
 print("Problema do Carteiro")
 
-def entrada_bairros():
-
-    print("Favor informar um dos seguintes valores 16, 41 ou 82.")
-    n_bairros = input("Informe a quantidade de bairros:")
-
-    if(n_bairros == "16"):
-        return "bairros16.txt"
-    elif(n_bairros == "41"):
-        return "bairros41.txt"
-    elif(n_bairros == "82"):
-        return "bairros82.txt"
-    else:
-        entrada_bairros()
-
 def entrada_tempo():
     tempo = input("Valor do Tempo:")
     return float(tempo)
@@ -31,7 +17,7 @@ def entrada_alfa():
     return float(alfa)
 
 
-f = open(entrada_bairros(),"r")
+f = open("bairros 16","r")
 l_bairros = f.read().split()
 f.close()
 bairros = {} #dicionario com a posicao de todos os bairros {'bairro_numero':[posX, posY]}
@@ -46,8 +32,8 @@ def distancia(xyA,xyB): #calcula a distancia reta entre dois pontos
     return round(d,12)
 
 bairros_custo = {} #dicionario com o custo de cada travessia {('bairroA_numero','bairroB_numero'): distancia}
-for k in range(1,42):
-    for c in range(1,42):
+for k in range(1,17):
+    for c in range(1,17):
         bairros_custo[(str(k),str(c))] = distancia(bairros[str(k)],bairros[str(c)])
 
 def custo_total(lista_bairros): #retorna o custo total de uma solucao
@@ -62,15 +48,15 @@ def custo_total(lista_bairros): #retorna o custo total de uma solucao
 def vizinho(solucao):
     solucao_anterior = solucao.copy()
     while True:
-        posA = random.randint(0,40)
-        posB = random.randint(0,40)
+        posA = random.randint(0,15)
+        posB = random.randint(0,15)
         a = solucao[posA]
         b = solucao[posB]
         solucao[posA] = b
         solucao[posB] = a
 
-        posC = random.randint(0, 40)
-        posD = random.randint(0, 40)
+        posC = random.randint(0, 15)
+        posD = random.randint(0, 15)
         c = solucao[posC]
         d = solucao[posD]
         solucao[posC] = d
@@ -126,7 +112,7 @@ def annealing(solucao, tempo, alfa):
     return melhor_solucao, melhor_custo
 
 def gerar_solucao(): #gera uma solucao aleatoria
-    solucao_aleatoria = [x for x in range(1,42)]
+    solucao_aleatoria = [x for x in range(1,17)]
     random.shuffle(solucao_aleatoria)
     return solucao_aleatoria
 
