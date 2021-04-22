@@ -170,7 +170,7 @@ class Experimento(ABC):
 		self.aproximados = []
 		self.tamanhos_aproximados = []
 
-		indice_cor = 0
+		indice_cor = 3
 		#configurações de plotagem
 		self.medicao_legenda = "medicao_legenda"
 		self.medicao_cor_rgb = mapa_escalar.to_rgba(2*indice_cor+0)
@@ -260,21 +260,22 @@ class TspNaive(Experimento):
 	def __init__(self, args):
 		super().__init__(args)
 		self.id = "t"
-		self.script = "alg_tsp_naive.py"
-		self.output = "out_tsp_naive.txt"
+		self.linestyle = 'loosely'
+		self.script = "alg_sort_selection.py"
+		self.output = "alg_sort_selection.txt"
 
-		indice_cor = 1
+		indice_cor = 9
 
 		# configurações de plotagem
 		self.medicao_legenda = "tsp naive medido"
-		self.medicao_cor_rgb = mapa_escalar.to_rgba(2*indice_cor)
+		self.medicao_cor_rgb = mapa_escalar.to_rgba(7*indice_cor)
 		self.medicao_formato = formatos[indice_cor]
 
 		self.aproximacao_legenda = "tsp naive aproximado"
 		self.aproximacao_cor_rgb = mapa_escalar.to_rgba(2*indice_cor+1)
 
 		# configurações de plotagem upper bound g(x)
-		self.gn1_constante = 0.000001
+		self.gn1_constante = 0.0000001
 		self.gn1_legenda = "g(n)=n!, c={:.2e}".format(self.gn1_constante)
 
 		# configurações de plotagem lower bound g(x)
@@ -303,7 +304,7 @@ class SortSelection(Experimento):
 		self.script = "alg_sort_selection.py"
 		self.output = "alg_sort_selection.txt"
 
-		indice_cor = 0
+		indice_cor = 5
 
 		# configurações de plotagem
 		self.medicao_legenda = "sort selection medido"
@@ -314,51 +315,11 @@ class SortSelection(Experimento):
 		self.aproximacao_cor_rgb = mapa_escalar.to_rgba(2*indice_cor+1)
 
 		# configurações de plotagem upper bound g(x)
-		self.gn1_constante = 0.000001
+		self.gn1_constante = 0.000018
 		self.gn1_legenda = "g(n)=n^2, c={:.2e}".format(self.gn1_constante)
 
 		# configurações de plotagem lower bound g(x)
-		self.gn2_constante = 0.0000001
-		self.gn2_legenda = "g(n)=n^2, c={:.2e}".format(self.gn2_constante)
-
-		self.multiplo = 1
-		self.tamanhos_aproximados = range(self.args.nmax * self.multiplo+1)
-
-	def executa_aproximacao(self):
-		# realiza aproximação
-		parametros, pcov = opt.curve_fit(funcao_quadratica, xdata=self.tamanhos, ydata=self.medias)
-		self.aproximados = [funcao_quadratica(x, *parametros) for x in self.tamanhos_aproximados ]
-		print("aproximados:           {}".format(self.aproximados))
-		print("parametros_otimizados: {}".format(parametros))
-		print("pcov:                  {}".format(pcov))
-
-	def g(self, n, c):
-		return n*n*c
-
-class SortBubble(Experimento):
-
-	def __init__(self, args):
-		super().__init__(args)
-		self.id = "b"
-		self.script = "alg_bubble_sort.py"
-		self.output = "alg_bubble_sort.txt"
-
-		indice_cor = 7
-
-		# configurações de plotagem
-		self.medicao_legenda = "sort bubble medido"
-		self.medicao_cor_rgb = mapa_escalar.to_rgba(2*indice_cor)
-		self.medicao_formato = formatos[indice_cor]
-
-		self.aproximacao_legenda = "sort bubble aproximado"
-		self.aproximacao_cor_rgb = mapa_escalar.to_rgba(2*indice_cor+1)
-
-		# configurações de plotagem upper bound g(x)
-		self.gn1_constante = 0.000047
-		self.gn1_legenda = "g(n)=n^2, c={:.2e}".format(self.gn1_constante)
-
-		# configurações de plotagem lower bound g(x)
-		self.gn2_constante = 0.0000120
+		self.gn2_constante = 0.0000020
 		self.gn2_legenda = "g(n)=n^2, c={:.2e}".format(self.gn2_constante)
 
 		self.multiplo = 1
@@ -434,7 +395,7 @@ def main():
 	imprime_config(args)
 
 	# lista de experimentos disponíveis TspNaive(args),
-	experimentos = [TspNaive(args), SortSelection(args), SortBubble(args)]
+	experimentos = [TspNaive(args), SortSelection(args)]
 
 	for e in experimentos:
 		if args.algoritmos is None or e.id in args.algoritmos:
@@ -450,7 +411,7 @@ def main():
 	# configurações gerais
 	plt.legend()
 	#plt.xticks(range(args.nstart, args.nstop+1, args.nstep))
-	plt.title("Ícaro Crespo - Impacto de n".format(args.trials, args.seed))
+	plt.title("Wagner Inácio de Oliveira - Impacto de n".format(args.trials, args.seed))
 	plt.xlabel("Tamanho da instância (n)")
 	plt.ylabel("Função")
 
