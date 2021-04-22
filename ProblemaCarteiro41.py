@@ -2,9 +2,9 @@ DEFAULT_OUT = "problema_carteiro_41.txt"
 DEFAULT_SEED = None
 
 DEFAULT_N_START = 1
-DEFAULT_N_STOP = 10
+DEFAULT_N_STOP = 1
 DEFAULT_N_STEP = 1
-DEFAULT_TRIALS = 3
+DEFAULT_TRIALS = 2
 
 from subprocess import Popen, PIPE
 from time import sleep, time
@@ -13,6 +13,7 @@ import shlex
 import json
 
 
+import time
 import sys
 import os
 import argparse
@@ -156,7 +157,7 @@ def gerar_solucao():  # gera uma solucao aleatoria
 def problema_carteiro():
     solucao_inicial = gerar_solucao()
 
-    solucao_final, custo = annealing(solucao_inicial, 1.0, 0.9)
+    solucao_final, custo = annealing(solucao_inicial, 10.0, 0.3)
     print(solucao_final, "Solução Final \n", custo, "Custo Final")
 
 
@@ -186,8 +187,8 @@ def main():
 
     trials = args.trials
     f = open(args.out, "w")
-    f.write("#Problema Carteiro 41\n")
-    f.write("#n time_s_avg time_s_std (for {} trials)\n".format(trials))
+    f.write("#Problema Carteiro N=82\n")
+    f.write("#n average turn-around time and average slowndown (for {} trials)\n".format(trials))
     m = 100
     np.random.seed(args.seed)
     for n in range(args.nstart, args.nstop + 1, args.nstep):  # range(1, 100):
@@ -199,17 +200,20 @@ def main():
             entrada = np.random.randint(0, n, n)
             print("Entrada: {}".format(entrada))
             tempo_inicio = timeit.default_timer()
+            inicio = time.time()
             resultados[trial] = problema_carteiro()
+            fim = time.time()
             tempo_fim = timeit.default_timer()
-            tempos[trial] = tempo_fim - tempo_inicio
+            tempos[trial] = fim - inicio
+            # tempos[trial] = tempo_fim - tempo_inicio
             print("Saída: {}".format(resultados[trial]))
             print('Tempo: {} s'.format(tempos[trial]))
             print("")
 
-        tempos_avg = np.average(tempos)  # calcula média
-        tempos_std = np.std(a=tempos, ddof=False)  # ddof=calcula desvio padrao de uma amostra?
+        turn_around_average = np.average(tempos)  # calcula média (turn-around medio)
+        slowdown_average = (turn_around_average / fim)  # ddof=calcula desvio padrao de uma amostra?
 
-        f.write("{} {} {}\n".format(n, tempos_avg, tempos_std))
+        f.write("{} {} {}\n".format(n, turn_around_average, slowdown_average))
     f.close()
 
 
