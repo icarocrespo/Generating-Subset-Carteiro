@@ -1,13 +1,44 @@
 from math import sqrt
 import random, decimal
 
-f = open("bairros.txt","r")
+print("Problema do Carteiro")
+
+def entrada_bairros():
+
+    print("Favor informar um dos seguintes valores 16, 41 ou 82.")
+    n_bairros = input("Informe a quantidade de bairros:")
+
+    if(n_bairros == "16"):
+        return "bairros16.txt"
+    elif(n_bairros == "41"):
+        return "bairros41.txt"
+    elif(n_bairros == "82"):
+        return "bairros82.txt"
+    else:
+        entrada_bairros()
+
+def entrada_tempo():
+    tempo = input("Valor do Tempo:")
+    return float(tempo)
+
+def entrada_alfa():
+    print("OBS: O Alfa deve ser menor que 1.")
+    alfa = input("Valor do Alfa:")
+    if(float(alfa) >= 1.0):
+        print("Alfa maior que um. Por favor insira um valor menor.")
+        entrada_alfa()
+
+    return float(alfa)
+
+
+f = open(entrada_bairros(),"r")
 l_bairros = f.read().split()
 f.close()
 bairros = {} #dicionario com a posicao de todos os bairros {'bairro_numero':[posX, posY]}
 
 for x in range(0,len(l_bairros),3): #preenche o dicionario com os bairros e posicoes
     bairros[l_bairros[x]] = [float(l_bairros[x+1]),float(l_bairros[x+2])]
+
 
 def distancia(xyA,xyB): #calcula a distancia reta entre dois pontos
     xA, xB, yA, yB = (xyA[0]), (xyB[0]), (xyA[1]), (xyB[1])
@@ -70,12 +101,12 @@ def probabilidade(custo_antigo,custo_novo,temperatura): #calcula a probabilidade
         resultado = round(float(resultado[9:-2]))
     return resultado
 
-def annealing(solucao):
+def annealing(solucao, tempo, alfa):
     print("Calculando rotas.....\n")
     custo_antigo = custo_total(solucao)
-    tempo = 1.0
+   # tempo = entrada_tempo()
     tempo_minimo = 0.0001
-    alfa = 0.9
+  #  alfa = entrada_alfa()
     melhor_solucao, melhor_custo = solucao[::], custo_antigo
     while tempo > tempo_minimo:
         i = 1
@@ -98,7 +129,8 @@ def gerar_solucao(): #gera uma solucao aleatoria
     solucao_aleatoria = [x for x in range(1,42)]
     random.shuffle(solucao_aleatoria)
     return solucao_aleatoria
+
 solucao_inicial = gerar_solucao()
 
-solucao_final, custo = annealing(solucao_inicial)
+solucao_final, custo = annealing(solucao_inicial, entrada_tempo(), entrada_alfa())
 print(solucao_final, "Solução Final \n", custo,"Custo Final")
