@@ -157,8 +157,9 @@ def gerar_solucao():  # gera uma solucao aleatoria
 def problema_carteiro():
     solucao_inicial = gerar_solucao()
 
-    solucao_final, custo = annealing(solucao_inicial, 10.0, 0.3)
+    solucao_final, custo = annealing(solucao_inicial, 1.0, 0.3)
     print(solucao_final, "Solução Final \n", custo, "Custo Final")
+    return custo
 
 
 def main():
@@ -179,7 +180,7 @@ def main():
     help_msg = "n passo.           Padrão:{}".format(DEFAULT_N_STEP)
     parser.add_argument("--nstep", "-e", help=help_msg, default=DEFAULT_N_STEP, type=int)
 
-    help_msg = "tentativas.        Padrão:{}".format(DEFAULT_N_STEP)
+    help_msg = "tentativas.        Padrão:{}".format(DEFAULT_TRIALS)
     parser.add_argument("--trials", "-t", help=help_msg, default=DEFAULT_TRIALS, type=int)
 
     # Lê argumentos from da linha de comando
@@ -187,7 +188,7 @@ def main():
 
     trials = args.trials
     f = open(args.out, "w")
-    f.write("#Problema Carteiro N=82\n")
+    f.write("#Problema Carteiro N=41\n")
     f.write("#n average turn-around time and average slowndown (for {} trials)\n".format(trials))
     m = 100
     np.random.seed(args.seed)
@@ -197,23 +198,21 @@ def main():
         for trial in range(trials):
             print("\n-------")
             print("n: {} trial: {}".format(n, trial + 1))
-            entrada = np.random.randint(0, n, n)
-            print("Entrada: {}".format(entrada))
             tempo_inicio = timeit.default_timer()
-            inicio = time.time()
             resultados[trial] = problema_carteiro()
-            fim = time.time()
             tempo_fim = timeit.default_timer()
-            tempos[trial] = fim - inicio
-            # tempos[trial] = tempo_fim - tempo_inicio
+            tempos[trial] = tempo_fim - tempo_inicio
             print("Saída: {}".format(resultados[trial]))
             print('Tempo: {} s'.format(tempos[trial]))
             print("")
 
-        turn_around_average = np.average(tempos)  # calcula média (turn-around medio)
-        slowdown_average = (turn_around_average / fim)  # ddof=calcula desvio padrao de uma amostra?
+        tempos_avg = np.average(tempos)  # calcula média
+        tempos_std = np.std(a=tempos, ddof=False)  # ddof=calcula desvio padrao de uma amostra?
 
-        f.write("{} {} {}\n".format(n, turn_around_average, slowdown_average))
+        resultados_avg = np.average(resultados)  # calcula média
+        resultados_std = np.std(a=resultados, ddof=False)  # ddof=calcula desvio padrao de uma amostra?
+
+        f.write("{} {} {} {} {} \n".format(n, tempos_avg, tempos_std, resultados_avg, resultados_std))
     f.close()
 
 

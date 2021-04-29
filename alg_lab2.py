@@ -11,7 +11,7 @@
 
 DEFAULT_SEED = None
 DEFAULT_N_START = 1
-DEFAULT_N_STOP = 10
+DEFAULT_N_STOP = 1
 DEFAULT_N_STEP = 1
 DEFAULT_TRIALS = 3
 DEFAULT_OUTPUT = None #"alg_lab.png"
@@ -200,8 +200,8 @@ class TspNaive(Experimento):
 	def __init__(self, args):
 		super().__init__(args)
 		self.id = "t"
-		self.script = "alg_tsp_naive.py"
-		self.output = "out_tsp_naive.txt"
+		self.script = "ProblemaCarteiro82.py"
+		self.output = "ProblemaCarteiro82.txt"
 
 		# configurações de plotagem
 		self.medicao_legenda = "tsp naive medido"
@@ -215,31 +215,6 @@ class TspNaive(Experimento):
 		# realiza aproximação
 		parametros, pcov = opt.curve_fit(funcao_fatorial, xdata=self.tamanhos, ydata=self.medias)
 		self.aproximados = [funcao_fatorial(x, *parametros) for x in self.tamanhos]
-		print("aproximados:           {}".format(self.aproximados))
-		print("parametros_otimizados: {}".format(parametros))
-		print("pcov:                  {}".format(pcov))
-
-
-class ProblemaCarteiro41(Experimento):
-
-	def __init__(self, args):
-		super().__init__(args)
-		self.id = "p"
-		self.script = "ProblemaCarteiro41.py"
-		self.output = "ProblemaCarteiro41.txt"
-
-		# configurações de plotagem
-		self.medicao_legenda = "problema carteiro 41 medido"
-		self.medicao_cor_rgb = mapa_escalar.to_rgba(2)
-		self.medicao_formato = formatos[2]
-
-		self.aproximacao_legenda = "problema carteiro 41 aproximado"
-		self.aproximacao_cor_rgb = mapa_escalar.to_rgba(3)
-
-	def executa_aproximacao(self):
-		# realiza aproximação
-		parametros, pcov = opt.curve_fit(funcao_quadratica, xdata=self.tamanhos, ydata=self.medias)
-		self.aproximados = [funcao_quadratica(x, *parametros) for x in self.tamanhos]
 		print("aproximados:           {}".format(self.aproximados))
 		print("parametros_otimizados: {}".format(parametros))
 		print("pcov:                  {}".format(pcov))
@@ -282,7 +257,7 @@ def main():
 	imprime_config(args)
 
 	# lista de experimentos disponíveis
-	experimentos = [TspNaive(args), ProblemaCarteiro41(args)]
+	experimentos = [TspNaive(args)]
 
 	for e in experimentos:
 		if args.algoritmos is None or e.id in args.algoritmos:
