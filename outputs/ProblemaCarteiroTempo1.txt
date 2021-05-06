@@ -1,0 +1,2 @@
+#Problema Carteiro N=41
+#n average turn-around time and average slowndown (for 3 trials)

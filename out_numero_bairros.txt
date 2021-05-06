@@ -1,0 +1,5 @@
+#Problema Carteiro com Annealing
+#n time_s_avg time_s_std result_avg result_std (for 3 trials)
+16 2.004 0.0077 2.1200 0.0301 
+41 2.277 0.0034 23640.2157 171.1538
+82 2.373 0.0159 11.7351 0.6336 

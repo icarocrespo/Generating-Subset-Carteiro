@@ -1,10 +1,10 @@
-DEFAULT_OUT = "problema_carteiro_16.txt"
+DEFAULT_OUT = "problema_carteiro_41.txt"
 DEFAULT_SEED = None
 
 DEFAULT_N_START = 1
 DEFAULT_N_STOP = 1
 DEFAULT_N_STEP = 1
-DEFAULT_TRIALS = 3
+DEFAULT_TRIALS = 2
 
 from subprocess import Popen, PIPE
 from time import sleep, time
@@ -20,7 +20,7 @@ import argparse
 import logging
 import subprocess
 
-from math import sqrt, log
+from math import sqrt
 import random, decimal
 import numpy as np
 import matplotlib.pyplot as plt
@@ -32,23 +32,7 @@ import timeit
 
 print("Problema do Carteiro")
 
-
-def entrada_tempo():
-    tempo = input("Valor do Tempo:")
-    return float(tempo)
-
-
-def entrada_alfa():
-    print("OBS: O Alfa deve ser menor que 1.")
-    alfa = input("Valor do Alfa:")
-    if (float(alfa) >= 1.0):
-        print("Alfa maior que um. Por favor insira um valor menor.")
-        entrada_alfa()
-
-    return float(alfa)
-
-
-f = open("bairros 16", "r")
+f = open("bairros 41", "r")
 l_bairros = f.read().split()
 f.close()
 bairros = {}  # dicionario com a posicao de todos os bairros {'bairro_numero':[posX, posY]}
@@ -64,8 +48,8 @@ def distancia(xyA, xyB):  # calcula a distancia reta entre dois pontos
 
 
 bairros_custo = {}  # dicionario com o custo de cada travessia {('bairroA_numero','bairroB_numero'): distancia}
-for k in range(1, 17):
-    for c in range(1, 17):
+for k in range(1, 42):
+    for c in range(1, 42):
         bairros_custo[(str(k), str(c))] = distancia(bairros[str(k)], bairros[str(c)])
 
 
@@ -82,15 +66,15 @@ def custo_total(lista_bairros):  # retorna o custo total de uma solucao
 def vizinho(solucao):
     solucao_anterior = solucao.copy()
     while True:
-        posA = random.randint(0, 15)
-        posB = random.randint(0, 15)
+        posA = random.randint(0, 40)
+        posB = random.randint(0, 40)
         a = solucao[posA]
         b = solucao[posB]
         solucao[posA] = b
         solucao[posB] = a
 
-        posC = random.randint(0, 15)
-        posD = random.randint(0, 15)
+        posC = random.randint(0, 40)
+        posD = random.randint(0, 40)
         c = solucao[posC]
         d = solucao[posD]
         solucao[posC] = d
@@ -149,7 +133,7 @@ def annealing(solucao, tempo, alfa):
 
 
 def gerar_solucao():  # gera uma solucao aleatoria
-    solucao_aleatoria = [x for x in range(1, 17)]
+    solucao_aleatoria = [x for x in range(1, 42)]
     random.shuffle(solucao_aleatoria)
     return solucao_aleatoria
 
@@ -157,14 +141,14 @@ def gerar_solucao():  # gera uma solucao aleatoria
 def problema_carteiro():
     solucao_inicial = gerar_solucao()
 
-    solucao_final, custo = annealing(solucao_inicial, 10.0, 0.3)
+    solucao_final, custo = annealing(solucao_inicial, 10.0, 0.9)
     print(solucao_final, "Solução Final \n", custo, "Custo Final")
     return custo
 
 
 def main():
     # Definição de argumentos
-    parser = argparse.ArgumentParser(description='Problema Carteiro N=16')
+    parser = argparse.ArgumentParser(description='Problema Carteiro N=41')
     help_msg = "arquivo de saída.  Padrão:{}".format(DEFAULT_OUT)
     parser.add_argument("--out", "-o", help=help_msg, default=DEFAULT_OUT, type=str)
 
@@ -180,7 +164,7 @@ def main():
     help_msg = "n passo.           Padrão:{}".format(DEFAULT_N_STEP)
     parser.add_argument("--nstep", "-e", help=help_msg, default=DEFAULT_N_STEP, type=int)
 
-    help_msg = "tentativas.        Padrão:{}".format(DEFAULT_N_STEP)
+    help_msg = "tentativas.        Padrão:{}".format(DEFAULT_TRIALS)
     parser.add_argument("--trials", "-t", help=help_msg, default=DEFAULT_TRIALS, type=int)
 
     # Lê argumentos from da linha de comando
@@ -188,7 +172,7 @@ def main():
 
     trials = args.trials
     f = open(args.out, "w")
-    f.write("#Problema Carteiro N=82\n")
+    f.write("#Problema Carteiro N=41\n")
     f.write("#n average turn-around time and average slowndown (for {} trials)\n".format(trials))
     m = 100
     np.random.seed(args.seed)

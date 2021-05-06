@@ -33,21 +33,6 @@ import timeit
 print("Problema do Carteiro")
 
 
-def entrada_tempo():
-    tempo = input("Valor do Tempo:")
-    return float(tempo)
-
-
-def entrada_alfa():
-    print("OBS: O Alfa deve ser menor que 1.")
-    alfa = input("Valor do Alfa:")
-    if (float(alfa) >= 1.0):
-        print("Alfa maior que um. Por favor insira um valor menor.")
-        entrada_alfa()
-
-    return float(alfa)
-
-
 f = open("bairros 82", "r")
 l_bairros = f.read().split()
 f.close()
@@ -158,7 +143,7 @@ def gerar_solucao():  # gera uma solucao aleatoria
 def problema_carteiro():
     solucao_inicial = gerar_solucao()
 
-    solucao_final, custo = annealing(solucao_inicial, 10.0, 0.3)
+    solucao_final, custo = annealing(solucao_inicial, 1.0, 0.5)
     print(solucao_final, "Solução Final \n", custo, "Custo Final")
     return custo
 

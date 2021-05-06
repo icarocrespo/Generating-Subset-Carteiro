@@ -99,7 +99,10 @@ def funcao_linear(n, cpu):
 	:param cpu: fator de conversão para tempo de CPU
 	:return: aproximação
 	'''
-    return (factorial(n) * cpu)
+    return (n * cpu)
+
+def funcao_constante(n, cpu):
+    return 2 * cpu
 
 
 def funcao_quadratica(n, cpu):
@@ -112,14 +115,23 @@ def funcao_quadratica(n, cpu):
     return (n * n * cpu)
 
 
-def funcao(n, cpu):
+def funcao_cubica(n, cpu):
     '''
 	Aproximação quadrática
 	:param n: tamanho da instância
 	:param cpu: fator de conversão para tempo de CPU
 	:return: aproximação
 	'''
-    return (n * 10) * cpu
+    return (n * n * n * cpu)
+
+def funcao_exponencial(n, cpu):
+    '''
+	Aproximação quadrática
+	:param n: tamanho da instância
+	:param cpu: fator de conversão para tempo de CPU
+	:return: aproximação
+	'''
+    return (np.exp(n) * cpu)
 
 
 def funcao_fatorial(n, cpu):
@@ -129,8 +141,7 @@ def funcao_fatorial(n, cpu):
 	:param cpu: fator de conversão para tempo de CPU
 	:return: aproximação
 	'''
-    return (n * cpu)
-
+    return (factorial(n) * cpu)
 
 def main():
     '''
@@ -138,11 +149,11 @@ def main():
 	:return:
 	'''
     # carrega dados do arquivo
-    tamanhos, medias, desvios = carrega_arquivo("out.txt")
+    tamanhos, medias, desvios = carrega_arquivo("out_numero_bairros.txt")
 
     # realiza aproximação
-    parametros, pcov = opt.curve_fit(funcao_fatorial, xdata=tamanhos, ydata=medias)
-    aproximados = [funcao_linear(x, *parametros) for x in tamanhos]
+    parametros, pcov = opt.curve_fit(funcao_constante, xdata=tamanhos, ydata=medias)
+    aproximados = [funcao_constante(x, *parametros) for x in tamanhos]
     print("aproximados:           {}".format(aproximados))
     print("parametros_otimizados: {}".format(parametros))
     print("pcov:                  {}".format(pcov))
@@ -167,7 +178,7 @@ def main():
     plt.legend()
     plt.xticks(tamanhos)
     plt.title("Tempo de execução de annealing p/ Carteiro (3 tentativas)")
-    plt.xlabel("Tamanho da instância (n)")
+    plt.xlabel("Quantidade da Bairros")
     plt.ylabel("Tempo de execução (s)")
 
     # mostra
